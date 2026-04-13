@@ -33,8 +33,8 @@
     </div>
     <div>
       <h3>Contact</h3>
-      <p><a href="mailto:shahbazrashed@outlook.com">shahbazrashed@outlook.com</a></p>
-      <p><a href="tel:07828818292">07828 818292</a></p>
+      <p><a href="mailto:baz@itexpertsuk.co.uk">baz@itexpertsuk.co.uk</a></p>
+      <p><a href="tel:03337724525">0333 772 4525</a></p>
       <p><a href="https://www.linkedin.com/in/baz-it/" target="_blank" rel="noopener">LinkedIn</a></p>
       <p class="small">Leeds, UK</p>
     </div>
