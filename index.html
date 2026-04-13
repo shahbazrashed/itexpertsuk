@@ -1,176 +1,1531 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IT Experts UK Ltd | Azure Architecture for Housing Associations and Complex Organisations</title>
-  <meta name="description" content="IT Experts UK Ltd delivers Azure architecture, migration, governance, security and modern workplace services for housing associations, charities and other complex organisations.">
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IT Experts UK Ltd | Azure Cloud Architecture &amp; Transformation</title>
+  <meta name="description" content="Senior Azure Cloud Architect with 25+ years experience. Expert in cloud transformation, governance, and DevOps for enterprise and public sector organisations across the UK." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:       #0b1929;
+      --navy-mid:   #122038;
+      --navy-light: #1a3050;
+      --azure:      #0078d4;
+      --azure-light:#50e6ff;
+      --azure-glow: rgba(0,120,212,0.15);
+      --white:      #ffffff;
+      --off-white:  #f4f7fb;
+      --grey-100:   #e8edf4;
+      --grey-400:   #8a9bb5;
+      --grey-600:   #4a5568;
+      --text:       #1a2740;
+      --transition: 0.25s ease;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--text);
+      background: var(--white);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── UTILITIES ─────────────────────────────────── */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    .section    { padding: 96px 0; }
+    .section--grey { background: var(--off-white); }
+    .section--dark { background: var(--navy); color: var(--white); }
+
+    .tag {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--azure);
+      background: var(--azure-glow);
+      padding: 6px 14px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .section--dark .tag { background: rgba(80,230,255,0.12); color: var(--azure-light); }
+
+    h1,h2,h3,h4 { line-height: 1.2; font-weight: 800; }
+
+    .section-title {
+      font-size: clamp(32px, 4vw, 46px);
+      color: var(--navy);
+      margin-bottom: 16px;
+    }
+    .section--dark .section-title { color: var(--white); }
+
+    .section-sub {
+      font-size: 18px;
+      color: var(--grey-600);
+      max-width: 600px;
+      line-height: 1.7;
+    }
+    .section--dark .section-sub { color: rgba(255,255,255,0.65); }
+
+    .section-header { margin-bottom: 60px; }
+    .section-header--center { text-align: center; }
+    .section-header--center .section-sub { margin: 0 auto; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: 6px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      border: none;
+      transition: all var(--transition);
+    }
+    .btn-primary {
+      background: var(--azure);
+      color: var(--white);
+    }
+    .btn-primary:hover { background: #006cbf; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(0,120,212,0.3); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--white);
+      border: 2px solid rgba(255,255,255,0.4);
+    }
+    .btn-outline:hover { border-color: var(--white); background: rgba(255,255,255,0.08); }
+
+    .btn-dark {
+      background: var(--white);
+      color: var(--azure);
+    }
+    .btn-dark:hover { background: var(--off-white); transform: translateY(-1px); }
+
+    /* ── NAVBAR ─────────────────────────────────────── */
+    .navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      background: rgba(11, 25, 41, 0.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      transition: all var(--transition);
+    }
+    .navbar__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+    }
+    .navbar__logo {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+    }
+    .navbar__logo img {
+      height: 40px;
+      width: auto;
+      background: white;
+      padding: 5px 10px;
+      border-radius: 7px;
+      display: block;
+      transition: opacity var(--transition);
+    }
+    .navbar__logo:hover img { opacity: 0.9; }
+    .footer__logo img {
+      height: 44px;
+      width: auto;
+      background: white;
+      padding: 5px 10px;
+      border-radius: 7px;
+      display: block;
+      opacity: 0.9;
+    }
+    .navbar__nav {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      list-style: none;
+    }
+    .navbar__nav a {
+      color: rgba(255,255,255,0.75);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color var(--transition);
+    }
+    .navbar__nav a:hover { color: var(--white); }
+    .navbar__cta { display: flex; gap: 12px; align-items: center; }
+    .navbar__cta .btn { padding: 10px 20px; font-size: 14px; }
+
+    /* ── HERO ───────────────────────────────────────── */
+    .hero {
+      background: var(--navy);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding-top: 72px;
+    }
+    .hero__bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 70% 50%, rgba(0,120,212,0.18) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 40% at 20% 80%, rgba(80,230,255,0.08) 0%, transparent 50%);
+    }
+    .hero__grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .hero__content {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      padding: 80px 0;
+    }
+    .hero__left {}
+    .hero__badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0,120,212,0.15);
+      border: 1px solid rgba(0,120,212,0.3);
+      color: var(--azure-light);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 8px 16px;
+      border-radius: 100px;
+      margin-bottom: 28px;
+    }
+    .hero__badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--azure-light);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.8); }
+    }
+    .hero__title {
+      font-size: clamp(40px, 5vw, 64px);
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1.08;
+      letter-spacing: -1px;
+      margin-bottom: 24px;
+    }
+    .hero__title span {
+      background: linear-gradient(135deg, var(--azure), var(--azure-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero__sub {
+      font-size: 18px;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.75;
+      margin-bottom: 40px;
+      max-width: 520px;
+    }
+    .hero__actions { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+    .hero__right { display: flex; justify-content: flex-end; }
+
+    /* Hero card */
+    .hero__card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      padding: 40px;
+      width: 100%;
+      max-width: 400px;
+      backdrop-filter: blur(10px);
+    }
+    .hero__card-avatar {
+      width: 80px; height: 80px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--azure), var(--azure-light));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 32px; font-weight: 800; color: white;
+      margin-bottom: 20px;
+    }
+    .hero__card-name {
+      font-size: 20px; font-weight: 800; color: var(--white); margin-bottom: 4px;
+    }
+    .hero__card-role {
+      font-size: 13px; color: var(--azure-light); font-weight: 500; margin-bottom: 20px;
+    }
+    .hero__card-divider {
+      height: 1px; background: rgba(255,255,255,0.1); margin: 20px 0;
+    }
+    .hero__cert-list { display: flex; flex-direction: column; gap: 10px; }
+    .hero__cert {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      color: rgba(255,255,255,0.75);
+      font-weight: 500;
+    }
+    .hero__cert-icon {
+      width: 28px; height: 28px;
+      background: rgba(0,120,212,0.2);
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+    .hero__card-footer {
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      display: flex; gap: 20px;
+    }
+    .hero__stat { text-align: center; }
+    .hero__stat-num { font-size: 24px; font-weight: 900; color: var(--white); }
+    .hero__stat-label { font-size: 11px; color: var(--grey-400); font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; }
+
+    /* ── LOGOS / PARTNER STRIP ──────────────────────── */
+    .partners {
+      background: var(--off-white);
+      padding: 40px 0;
+      border-top: 1px solid var(--grey-100);
+      border-bottom: 1px solid var(--grey-100);
+    }
+    .partners__inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 60px;
+      flex-wrap: wrap;
+    }
+    .partners__label {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--grey-400);
+      white-space: nowrap;
+    }
+    .partners__logos { display: flex; align-items: center; gap: 48px; flex-wrap: wrap; justify-content: center; }
+    .partners__logo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      opacity: 0.55;
+      transition: opacity var(--transition);
+    }
+    .partners__logo:hover { opacity: 1; }
+    .partners__logo-img {
+      height: 28px;
+      object-fit: contain;
+      filter: grayscale(100%);
+    }
+    .partner-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: white;
+      border: 1px solid var(--grey-100);
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--grey-600);
+    }
+    .partner-badge span { color: var(--azure); }
+
+    /* ── SERVICES ───────────────────────────────────── */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 28px;
+    }
+    .service-card {
+      background: var(--white);
+      border: 1px solid var(--grey-100);
+      border-radius: 12px;
+      padding: 36px;
+      transition: all var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    .service-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--azure), var(--azure-light));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.35s ease;
+    }
+    .service-card:hover { border-color: var(--azure); box-shadow: 0 12px 40px rgba(0,120,212,0.1); transform: translateY(-4px); }
+    .service-card:hover::after { transform: scaleX(1); }
+
+    .service-icon {
+      width: 52px; height: 52px;
+      background: linear-gradient(135deg, rgba(0,120,212,0.1), rgba(80,230,255,0.08));
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 24px;
+      font-size: 24px;
+    }
+    .service-card h3 {
+      font-size: 20px; font-weight: 700; color: var(--navy); margin-bottom: 12px;
+    }
+    .service-card p {
+      font-size: 15px; color: var(--grey-600); line-height: 1.7; margin-bottom: 20px;
+    }
+    .service-link {
+      font-size: 14px; font-weight: 600; color: var(--azure); text-decoration: none;
+      display: inline-flex; align-items: center; gap: 4px;
+      transition: gap var(--transition);
+    }
+    .service-link:hover { gap: 8px; }
+
+    /* ── STATS ──────────────────────────────────────── */
+    .stats { background: var(--navy); padding: 72px 0; }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+    }
+    .stat-item {
+      text-align: center;
+      padding: 32px;
+      border-right: 1px solid rgba(255,255,255,0.08);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-num {
+      font-size: clamp(40px, 5vw, 56px);
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--azure), var(--azure-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .stat-label {
+      font-size: 14px;
+      color: rgba(255,255,255,0.55);
+      font-weight: 500;
+    }
+
+    /* ── WHY CHOOSE ─────────────────────────────────── */
+    .why-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .why-image {
+      background: linear-gradient(135deg, var(--navy), var(--navy-light));
+      border-radius: 16px;
+      padding: 48px;
+      display: grid;
+      gap: 16px;
+    }
+    .why-feature {
+      display: flex;
+      gap: 16px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      padding: 20px;
+    }
+    .why-feature-icon {
+      width: 40px; height: 40px; min-width: 40px;
+      background: rgba(0,120,212,0.2);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+    }
+    .why-feature-text h4 { font-size: 15px; color: var(--white); font-weight: 700; margin-bottom: 4px; }
+    .why-feature-text p { font-size: 13px; color: rgba(255,255,255,0.5); line-height: 1.5; }
+
+    .why-points { display: flex; flex-direction: column; gap: 24px; }
+    .why-point {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .why-point-num {
+      width: 36px; height: 36px; min-width: 36px;
+      background: var(--azure);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 800; color: white;
+    }
+    .why-point-text h4 { font-size: 17px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+    .why-point-text p { font-size: 15px; color: var(--grey-600); line-height: 1.65; }
+
+    /* ── ABOUT ──────────────────────────────────────── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .about-photo {
+      position: relative;
+    }
+    .about-photo__img {
+      width: 100%;
+      aspect-ratio: 4/5;
+      background: linear-gradient(135deg, var(--navy-light), var(--navy));
+      border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 72px; font-weight: 900;
+      color: rgba(255,255,255,0.1);
+    }
+    .about-photo__badge {
+      position: absolute;
+      bottom: -20px; right: -20px;
+      background: var(--azure);
+      color: white;
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+    }
+    .about-photo__badge-num { font-size: 32px; font-weight: 900; line-height: 1; }
+    .about-photo__badge-text { font-size: 12px; font-weight: 600; opacity: 0.85; letter-spacing: 0.04em; }
+    .about-content { padding-top: 8px; }
+    .about-content p { font-size: 16px; color: var(--grey-600); line-height: 1.8; margin-bottom: 20px; }
+    .about-certs {
+      margin-top: 32px;
+      display: flex; flex-wrap: wrap; gap: 10px;
+    }
+    /* ── CERT BADGES ── */
+    .hero__cert { display: flex; gap: 12px; align-items: center; }
+    .cert-hex { width: 36px; min-width: 36px; height: 36px; }
+    .cert-hex svg { width: 100%; height: 100%; }
+    .hero__cert-text { display: flex; flex-direction: column; gap: 2px; }
+    .cert-level-tag {
+      font-size: 9px; font-weight: 800; text-transform: uppercase;
+      letter-spacing: 0.1em; padding: 1px 6px; border-radius: 3px;
+      display: inline-block; width: fit-content;
+    }
+    .cert-level-tag--expert  { background: rgba(92,45,145,0.25); color: #c8a0f0; }
+    .cert-level-tag--associate { background: rgba(0,120,212,0.2); color: #80c8ff; }
+    .cert-level-tag--specialty { background: rgba(0,183,195,0.2); color: #60dde5; }
+    .cert-level-tag--other   { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.5); }
+    .hero__cert-name { font-size: 12px; color: rgba(255,255,255,0.82); font-weight: 500; line-height: 1.3; }
+
+    /* About section cert pills */
+    .cert-pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 7px 14px 7px 7px;
+      background: var(--off-white);
+      border: 1px solid var(--grey-100);
+      border-radius: 100px;
+      font-size: 13px; font-weight: 600; color: var(--navy);
+    }
+    .cert-pill-badge { width: 22px; height: 22px; flex-shrink: 0; }
+    .cert-pill-badge svg { width: 100%; height: 100%; }
+
+    /* ── CASE STUDIES ───────────────────────────────── */
+    .case-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 28px;
+    }
+    .case-card {
+      background: var(--white);
+      border: 1px solid var(--grey-100);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all var(--transition);
+    }
+    .case-card:hover { box-shadow: 0 16px 48px rgba(0,0,0,0.1); transform: translateY(-4px); }
+    .case-card__header {
+      padding: 32px;
+      background: var(--navy);
+      position: relative;
+    }
+    .case-card__sector {
+      font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;
+      color: var(--azure-light); margin-bottom: 12px;
+    }
+    .case-card__title {
+      font-size: 20px; font-weight: 800; color: var(--white); line-height: 1.3;
+    }
+    .case-card__body { padding: 32px; }
+    .case-card__challenge {
+      font-size: 14px; font-weight: 600; color: var(--grey-400);
+      text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px;
+    }
+    .case-card__text {
+      font-size: 15px; color: var(--grey-600); line-height: 1.7; margin-bottom: 24px;
+    }
+    .case-card__outcomes { display: flex; flex-wrap: wrap; gap: 8px; }
+    .outcome-tag {
+      padding: 5px 12px;
+      background: rgba(0,120,212,0.07);
+      color: var(--azure);
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    /* ── APPROACH ───────────────────────────────────── */
+    .approach-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      background: var(--white);
+      border: 1px solid var(--grey-100);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .approach-step {
+      padding: 40px 32px;
+      border-right: 1px solid var(--grey-100);
+      position: relative;
+    }
+    .approach-step:last-child { border-right: none; }
+    .approach-step__num {
+      font-size: 48px; font-weight: 900;
+      color: var(--grey-100);
+      line-height: 1;
+      margin-bottom: 16px;
+      font-variant-numeric: tabular-nums;
+    }
+    .approach-step h3 { font-size: 18px; font-weight: 700; color: var(--navy); margin-bottom: 10px; }
+    .approach-step p { font-size: 14px; color: var(--grey-600); line-height: 1.65; }
+
+    /* ── CTA BANNER ─────────────────────────────────── */
+    .cta-banner {
+      background: linear-gradient(135deg, var(--azure) 0%, #005fa3 100%);
+      padding: 80px 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-banner::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 50% 80% at 0% 50%, rgba(255,255,255,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 80% at 100% 50%, rgba(255,255,255,0.06) 0%, transparent 60%);
+    }
+    .cta-banner > * { position: relative; z-index: 1; }
+    .cta-banner h2 {
+      font-size: clamp(30px, 4vw, 46px);
+      font-weight: 900;
+      color: white;
+      margin-bottom: 16px;
+    }
+    .cta-banner p {
+      font-size: 18px; color: rgba(255,255,255,0.8); margin-bottom: 40px; max-width: 600px; margin-left: auto; margin-right: auto;
+    }
+    .cta-banner .btn-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+    /* ── CONTACT ────────────────────────────────────── */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .contact-info h3 { font-size: 24px; font-weight: 800; color: var(--navy); margin-bottom: 16px; }
+    .contact-info p { font-size: 16px; color: var(--grey-600); line-height: 1.75; margin-bottom: 32px; }
+    .contact-detail {
+      display: flex; align-items: center; gap: 14px; margin-bottom: 16px;
+    }
+    .contact-detail-icon {
+      width: 44px; height: 44px;
+      background: var(--off-white);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+    }
+    .contact-detail-text { font-size: 15px; color: var(--text); font-weight: 500; }
+    .contact-detail-text a { color: var(--azure); text-decoration: none; }
+    .contact-detail-text a:hover { text-decoration: underline; }
+
+    .contact-form {
+      background: var(--off-white);
+      border-radius: 16px;
+      padding: 40px;
+    }
+    .form-group { margin-bottom: 20px; }
+    .form-group label {
+      display: block; font-size: 13px; font-weight: 600; color: var(--text);
+      margin-bottom: 6px; letter-spacing: 0.02em;
+    }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1.5px solid var(--grey-100);
+      border-radius: 8px;
+      font-size: 15px;
+      font-family: 'Inter', sans-serif;
+      color: var(--text);
+      background: white;
+      transition: border-color var(--transition);
+      outline: none;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      border-color: var(--azure);
+      box-shadow: 0 0 0 3px rgba(0,120,212,0.1);
+    }
+    .form-group textarea { min-height: 130px; resize: vertical; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    /* ── FOOTER ─────────────────────────────────────── */
+    .footer {
+      background: var(--navy);
+      color: var(--white);
+      padding: 64px 0 32px;
+    }
+    .footer__grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 48px;
+    }
+    .footer__brand p {
+      font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.75; margin-top: 16px;
+    }
+    .footer__col h4 {
+      font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.4); margin-bottom: 18px;
+    }
+    .footer__col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer__col ul a {
+      font-size: 14px; color: rgba(255,255,255,0.65); text-decoration: none;
+      transition: color var(--transition);
+    }
+    .footer__col ul a:hover { color: var(--white); }
+    .footer__bottom {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .footer__bottom p { font-size: 13px; color: rgba(255,255,255,0.4); }
+    .footer__bottom-right { display: flex; gap: 20px; }
+    .footer__bottom-right a { font-size: 13px; color: rgba(255,255,255,0.4); text-decoration: none; }
+    .footer__bottom-right a:hover { color: rgba(255,255,255,0.7); }
+
+    /* Microsoft badge */
+    .ms-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 18px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 8px;
+      font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.6);
+      margin-top: 20px;
+    }
+    .ms-badge-icon { font-size: 18px; }
+
+    /* ── MOBILE ─────────────────────────────────────── */
+    .hamburger { display: none; cursor: pointer; background: none; border: none; padding: 8px; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: white; margin: 4px 0; border-radius: 2px; }
+
+    @media (max-width: 1024px) {
+      .hero__content { grid-template-columns: 1fr; gap: 48px; }
+      .hero__right { justify-content: flex-start; }
+      .hero__card { max-width: 100%; }
+      .why-grid { grid-template-columns: 1fr; gap: 48px; }
+      .about-grid { grid-template-columns: 1fr; gap: 48px; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .stat-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); }
+      .stat-item:nth-child(even) { border-bottom: none; }
+      .approach-grid { grid-template-columns: repeat(2, 1fr); }
+      .approach-step:nth-child(2) { border-right: none; }
+      .approach-step { border-bottom: 1px solid var(--grey-100); }
+      .approach-step:nth-child(3), .approach-step:nth-child(4) { border-bottom: none; }
+      .contact-grid { grid-template-columns: 1fr; gap: 48px; }
+      .footer__grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      .section { padding: 64px 0; }
+      .navbar__nav { display: none; }
+      .navbar__cta .btn-outline { display: none; }
+      .hamburger { display: block; }
+      .hero__content { padding: 48px 0; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .approach-grid { grid-template-columns: 1fr; }
+      .approach-step { border-right: none; border-bottom: 1px solid var(--grey-100); }
+      .footer__grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
+
 <body>
-<header class="header">
-  <div class="container nav">
-    <a class="logo" href="index.html" aria-label="IT Experts UK Ltd home">
-      <img src="assets/logo.jpg" alt="IT Experts UK Ltd logo">
-    </a>
-    <nav class="nav-links">
-      <a href="housing.html">Housing Associations</a>
-      <a href="services.html">Services</a>
-      <a href="case-studies.html">Case Studies</a>
-      <a href="about.html">About</a>
-      <a href="insights.html">Insights</a>
-      <a href="contact.html" class="btn btn-primary">Contact</a>
-    </nav>
-  </div>
-</header>
-<section class="hero">
-  <div class="container hero-grid">
-    <div>
-      <div class="kicker">Housing-focused. Azure-led. Delivery-backed.</div>
-      <h1>Azure transformation for housing associations and other organisations that need secure, well-governed platforms.</h1>
-      <p>IT Experts UK Ltd helps organisations modernise legacy infrastructure, improve governance, strengthen security and deliver practical Azure outcomes through architecture, hands-on delivery and internal team enablement.</p>
-      <p class="note">Strong recent experience in housing, with broader delivery across charity, public sector, manufacturing, engineering, telecoms and financial services.</p>
-      <div class="hero-actions">
-        <a class="btn btn-primary" href="contact.html">Book a discovery call</a>
-        <a class="btn btn-secondary" href="case-studies.html">View case studies</a>
-      </div>
-      <div class="badges">
-        <span class="badge">Azure Solutions Architect Expert</span>
-        <span class="badge">Azure Cybersecurity Architect Expert</span>
-        <span class="badge">Terraform Certified Associate</span>
-        <span class="badge">25+ years in IT</span>
-      </div>
-    </div>
-    <aside class="hero-card hero-logo-card">
-      <img src="assets/logo.jpg" alt="IT Experts UK Ltd logo">
-    </aside>
-  </div>
-</section>
-<section class="section-tight">
-  <div class="container grid-4">
-    <div class="stat"><strong>3</strong><span>featured client case studies</span></div>
-    <div class="stat"><strong>700</strong><span>Windows 11 endpoints delivered on a major programme</span></div>
-    <div class="stat"><strong>25+</strong><span>years across infrastructure and cloud</span></div>
-    <div class="stat"><strong>Multi-sector</strong><span>housing, charity, public sector, engineering and more</span></div>
-  </div>
-</section>
-<section class="section">
+
+<!-- ── NAVBAR ── -->
+<nav class="navbar">
   <div class="container">
-    <div class="kicker">What clients bring Baz in to do</div>
-    <h2>Move from fragile estates to modern, supportable platforms.</h2>
-    <div class="grid-3">
-      <article class="card">
-        <h3>Azure landing zones and governance</h3>
-        <p>Design secure Azure foundations with the right structure, networking, policy, identity and repeatable deployment patterns.</p>
-      </article>
-      <article class="card">
-        <h3>Migration and modernisation</h3>
-        <p>Support the move from legacy estates to Azure using the right balance of lift-and-shift, re-platforming and redesign.</p>
-      </article>
-      <article class="card">
-        <h3>Team enablement</h3>
-        <p>Leave internal teams stronger through workshops, documentation, paired delivery and practical knowledge transfer.</p>
-      </article>
-    </div>
-  </div>
-</section>
-<section class="section">
-  <div class="container split">
-    <div>
-      <div class="kicker">Housing associations</div>
-      <h2>Deep recent focus in the housing sector.</h2>
-      <p>Housing associations need resilient platforms, clear governance and delivery that respects operational reality. IT Experts UK Ltd has been supporting housing organisations with Azure architecture, landing zones, migration planning, modern workplace transformation and technical leadership.</p>
-      <ul class="list-check">
-        <li>Magenta Living: cloud transformation, landing zones, Terraform, migration support and team enablement.</li>
-        <li>South Liverpool Homes: CAF-aligned landing zone redesign, governance improvement and resilient connectivity.</li>
-        <li>Experience working closely with housing leadership teams and delivery partners.</li>
+    <div class="navbar__inner">
+      <a href="#" class="navbar__logo">
+        <img src="logo.jpg" alt="IT Experts UK" />
+      </a>
+      <ul class="navbar__nav">
+        <li><a href="#services">Services</a></li>
+        <li><a href="#approach">Approach</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#case-studies">Case Studies</a></li>
+        <li><a href="#contact">Contact</a></li>
       </ul>
-      <a class="btn btn-primary" href="housing.html">Explore housing sector expertise</a>
+      <div class="navbar__cta">
+        <a href="tel:03337724525" class="btn btn-outline">📞 0333 772 4525</a>
+        <a href="#contact" class="btn btn-primary">Get in Touch</a>
+      </div>
+      <button class="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
     </div>
-    <div class="cta-panel">
-      <h3>Also trusted beyond housing</h3>
-      <p>Cross-sector experience strengthens delivery by bringing wider operational, security and transformation insight into each engagement.</p>
-      <div class="badges">
-        <span class="badge">Charity</span>
-        <span class="badge">Public sector</span>
-        <span class="badge">Manufacturing</span>
-        <span class="badge">Engineering</span>
-        <span class="badge">Telecommunications</span>
-        <span class="badge">Financial services</span>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero__bg"></div>
+  <div class="hero__grid"></div>
+  <div class="container">
+    <div class="hero__content">
+      <div class="hero__left">
+        <div class="hero__badge">Senior Azure Cloud Architect · UK</div>
+        <h1 class="hero__title">
+          Cloud Transformation<br/>
+          Delivered by an<br/>
+          <span>Azure Expert</span>
+        </h1>
+        <p class="hero__sub">
+          25+ years of enterprise IT experience. Specialising in Azure cloud architecture, governance, and transformation for UK organisations that demand precision, security, and measurable outcomes.
+        </p>
+        <div class="hero__actions">
+          <a href="#contact" class="btn btn-primary">Start a Conversation →</a>
+          <a href="#case-studies" class="btn btn-outline">View Case Studies</a>
+        </div>
+      </div>
+      <div class="hero__right">
+        <div class="hero__card">
+          <div class="hero__card-avatar" style="padding:0;overflow:hidden;"><img src="baz.jpeg" alt="Baz Rashed" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" /></div>
+          <div class="hero__card-name">Baz Rashed</div>
+          <div class="hero__card-role">Principal Azure Cloud Architect · IT Experts UK Ltd</div>
+          <div class="hero__card-divider"></div>
+          <div class="hero__cert-list">
+
+            <!-- EXPERT: AZ-305 -->
+            <div class="hero__cert">
+              <div class="cert-hex">
+                <svg viewBox="0 0 100 115" xmlns="http://www.w3.org/2000/svg">
+                  <polygon points="50,5 95,30 95,85 50,110 5,85 5,30" fill="#5c2d91"/>
+                  <polygon points="50,11 89,33 89,82 50,104 11,82 11,33" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
+                  <text x="50" y="58" text-anchor="middle" font-size="22" fill="#ffd700" font-family="Arial">★★★</text>
+                  <text x="50" y="76" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.7)" font-family="Arial" font-weight="bold" letter-spacing="0.5">EXPERT</text>
+                </svg>
+              </div>
+              <div class="hero__cert-text">
+                <span class="cert-level-tag cert-level-tag--expert">Expert · AZ-305</span>
+                <span class="hero__cert-name">Azure Solutions Architect Expert</span>
+              </div>
+            </div>
+
+            <!-- EXPERT: SC-100 -->
+            <div class="hero__cert">
+              <div class="cert-hex">
+                <svg viewBox="0 0 100 115" xmlns="http://www.w3.org/2000/svg">
+                  <polygon points="50,5 95,30 95,85 50,110 5,85 5,30" fill="#5c2d91"/>
+                  <polygon points="50,11 89,33 89,82 50,104 11,82 11,33" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
+                  <text x="50" y="58" text-anchor="middle" font-size="22" fill="#ffd700" font-family="Arial">★★★</text>
+                  <text x="50" y="76" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.7)" font-family="Arial" font-weight="bold" letter-spacing="0.5">EXPERT</text>
+                </svg>
+              </div>
+              <div class="hero__cert-text">
+                <span class="cert-level-tag cert-level-tag--expert">Expert · SC-100</span>
+                <span class="hero__cert-name">Cybersecurity Architect Expert</span>
+              </div>
+            </div>
+
+            <!-- ASSOCIATE: AZ-500 -->
+            <div class="hero__cert">
+              <div class="cert-hex">
+                <svg viewBox="0 0 100 115" xmlns="http://www.w3.org/2000/svg">
+                  <polygon points="50,5 95,30 95,85 50,110 5,85 5,30" fill="#0078d4"/>
+                  <polygon points="50,11 89,33 89,82 50,104 11,82 11,33" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
+                  <text x="50" y="60" text-anchor="middle" font-size="22" fill="white" font-family="Arial">★★</text>
+                  <text x="50" y="78" text-anchor="middle" font-size="7.5" fill="rgba(255,255,255,0.75)" font-family="Arial" font-weight="bold" letter-spacing="0.3">ASSOCIATE</text>
+                </svg>
+              </div>
+              <div class="hero__cert-text">
+                <span class="cert-level-tag cert-level-tag--associate">Associate · AZ-500</span>
+                <span class="hero__cert-name">Azure Security Engineer Associate</span>
+              </div>
+            </div>
+
+            <!-- ASSOCIATE: AZ-700 -->
+            <div class="hero__cert">
+              <div class="cert-hex">
+                <svg viewBox="0 0 100 115" xmlns="http://www.w3.org/2000/svg">
+                  <polygon points="50,5 95,30 95,85 50,110 5,85 5,30" fill="#0078d4"/>
+                  <polygon points="50,11 89,33 89,82 50,104 11,82 11,33" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
+                  <text x="50" y="60" text-anchor="middle" font-size="22" fill="white" font-family="Arial">★★</text>
+                  <text x="50" y="78" text-anchor="middle" font-size="7.5" fill="rgba(255,255,255,0.75)" font-family="Arial" font-weight="bold" letter-spacing="0.3">ASSOCIATE</text>
+                </svg>
+              </div>
+              <div class="hero__cert-text">
+                <span class="cert-level-tag cert-level-tag--associate">Associate · AZ-700</span>
+                <span class="hero__cert-name">Azure Network Engineer Associate</span>
+              </div>
+            </div>
+
+            <!-- ASSOCIATE: AZ-104 -->
+            <div class="hero__cert">
+              <div class="cert-hex">
+                <svg viewBox="0 0 100 115" xmlns="http://www.w3.org/2000/svg">
+                  <polygon points="50,5 95,30 95,85 50,110 5,85 5,30" fill="#0078d4"/>
+                  <polygon points="50,11 89,33 89,82 50,104 11,82 11,33" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
+                  <text x="50" y="60" text-anchor="middle" font-size="22" fill="white" font-family="Arial">★★</text>
+                  <text x="50" y="78" text-anchor="middle" font-size="7.5" fill="rgba(255,255,255,0.75)" font-family="Arial" font-weight="bold" letter-spacing="0.3">ASSOCIATE</text>
+                </svg>
+              </div>
+              <div class="hero__cert-text">
+                <span class="cert-level-tag cert-level-tag--associate">Associate · AZ-104</span>
+                <span class="hero__cert-name">Azure Administrator Associate</span>
+              </div>
+            </div>
+
+            <!-- SPECIALTY: AVD -->
+            <div class="hero__cert">
+              <div class="cert-hex">
+                <svg viewBox="0 0 100 115" xmlns="http://www.w3.org/2000/svg">
+                  <polygon points="50,5 95,30 95,85 50,110 5,85 5,30" fill="#00b7c3"/>
+                  <polygon points="50,11 89,33 89,82 50,104 11,82 11,33" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
+                  <text x="50" y="62" text-anchor="middle" font-size="26" fill="white" font-family="Arial">◆</text>
+                  <text x="50" y="79" text-anchor="middle" font-size="7" fill="rgba(255,255,255,0.75)" font-family="Arial" font-weight="bold" letter-spacing="0.3">SPECIALTY</text>
+                </svg>
+              </div>
+              <div class="hero__cert-text">
+                <span class="cert-level-tag cert-level-tag--specialty">Specialty · AVD</span>
+                <span class="hero__cert-name">Azure Virtual Desktop Specialty</span>
+              </div>
+            </div>
+
+            <!-- Terraform Associate -->
+            <div class="hero__cert">
+              <div class="cert-hex">
+                <svg viewBox="0 0 100 115" xmlns="http://www.w3.org/2000/svg">
+                  <polygon points="50,5 95,30 95,85 50,110 5,85 5,30" fill="#7b42bc"/>
+                  <polygon points="50,11 89,33 89,82 50,104 11,82 11,33" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
+                  <text x="50" y="60" text-anchor="middle" font-size="18" fill="white" font-family="Arial" font-weight="bold">TF</text>
+                  <text x="50" y="78" text-anchor="middle" font-size="7.5" fill="rgba(255,255,255,0.75)" font-family="Arial" font-weight="bold" letter-spacing="0.3">ASSOCIATE</text>
+                </svg>
+              </div>
+              <div class="hero__cert-text">
+                <span class="cert-level-tag cert-level-tag--other">HashiCorp</span>
+                <span class="hero__cert-name">Terraform Certified Associate</span>
+              </div>
+            </div>
+
+          </div>
+          <div class="hero__card-footer">
+            <div class="hero__stat">
+              <div class="hero__stat-num">25+</div>
+              <div class="hero__stat-label">Years in IT</div>
+            </div>
+            <div class="hero__stat">
+              <div class="hero__stat-num">50+</div>
+              <div class="hero__stat-label">Projects Delivered</div>
+            </div>
+            <div class="hero__stat">
+              <div class="hero__stat-num">100%</div>
+              <div class="hero__stat-label">UK Focused</div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </section>
+
+<!-- ── PARTNER STRIP ── -->
+<div class="partners">
+  <div class="container">
+    <div class="partners__inner">
+      <span class="partners__label">Trusted Expertise In</span>
+      <div class="partners__logos">
+        <div class="partner-badge"><span>⬡</span> Microsoft Azure</div>
+        <div class="partner-badge"><span>⬡</span> Azure DevOps</div>
+        <div class="partner-badge"><span>⬡</span> Terraform / Bicep</div>
+        <div class="partner-badge"><span>⬡</span> CAF / Landing Zones</div>
+        <div class="partner-badge"><span>⬡</span> Azure Governance</div>
+        <div class="partner-badge"><span>⬡</span> Microsoft 365</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SERVICES ── -->
+<section class="section" id="services">
+  <div class="container">
+    <div class="section-header">
+      <div class="tag">What We Do</div>
+      <h2 class="section-title">Expert Azure Services,<br/>Delivered with Precision</h2>
+      <p class="section-sub">We don't offer generic IT consultancy. Every engagement is led by a senior Azure architect with real-world delivery experience across enterprise and public sector.</p>
+    </div>
+    <div class="services-grid">
+
+      <div class="service-card">
+        <div class="service-icon">☁️</div>
+        <h3>Azure Cloud Architecture</h3>
+        <p>Design and deliver secure, scalable Azure environments aligned to your business goals. From greenfield builds to complex hybrid architectures — built right, from day one.</p>
+        <ul style="font-size:14px; color:var(--grey-600); padding-left:18px; margin-bottom:20px; display:flex; flex-direction:column; gap:6px;">
+          <li>Landing Zone design & deployment</li>
+          <li>Hybrid & multi-cloud architecture</li>
+          <li>Azure networking & security</li>
+          <li>Cost optimisation & right-sizing</li>
+        </ul>
+        <a href="#contact" class="service-link">Discuss your architecture →</a>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">🚀</div>
+        <h3>Cloud Migration & Transformation</h3>
+        <p>Migrate confidently to Azure with a structured, low-risk approach. We manage the full journey — from assessment and planning to cutover and post-migration optimisation.</p>
+        <ul style="font-size:14px; color:var(--grey-600); padding-left:18px; margin-bottom:20px; display:flex; flex-direction:column; gap:6px;">
+          <li>Workload assessment & migration planning</li>
+          <li>Lift-and-shift & replatforming</li>
+          <li>On-premise to Azure migrations</li>
+          <li>Risk management & rollback planning</li>
+        </ul>
+        <a href="#contact" class="service-link">Plan your migration →</a>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">🏛️</div>
+        <h3>Azure Governance &amp; CAF Alignment</h3>
+        <p>Establish control across your Azure estate. We implement governance frameworks aligned to Microsoft's Cloud Adoption Framework, giving you visibility, compliance, and confidence.</p>
+        <ul style="font-size:14px; color:var(--grey-600); padding-left:18px; margin-bottom:20px; display:flex; flex-direction:column; gap:6px;">
+          <li>Management group & policy design</li>
+          <li>RBAC, IAM & access governance</li>
+          <li>Azure Policy & Blueprints</li>
+          <li>Defender for Cloud & security posture</li>
+        </ul>
+        <a href="#contact" class="service-link">Strengthen your governance →</a>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">⚙️</div>
+        <h3>DevOps &amp; Infrastructure Automation</h3>
+        <p>Accelerate delivery and eliminate manual toil with modern Infrastructure as Code and CI/CD pipelines. Build repeatable, auditable, and scalable cloud infrastructure.</p>
+        <ul style="font-size:14px; color:var(--grey-600); padding-left:18px; margin-bottom:20px; display:flex; flex-direction:column; gap:6px;">
+          <li>Terraform & Bicep (IaC)</li>
+          <li>Azure DevOps & GitHub Actions pipelines</li>
+          <li>GitOps workflows & branching strategies</li>
+          <li>Team coaching & capability uplift</li>
+        </ul>
+        <a href="#contact" class="service-link">Automate your infrastructure →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── STATS ── -->
+<div class="stats">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item">
+        <div class="stat-num">25+</div>
+        <div class="stat-label">Years of IT Experience</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">50+</div>
+        <div class="stat-label">Cloud Projects Delivered</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">11</div>
+        <div class="stat-label">Professional Certifications</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">UK</div>
+        <div class="stat-label">Based &amp; Focused</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── WHY CHOOSE ── -->
+<section class="section section--grey" id="approach">
+  <div class="container">
+    <div class="why-grid">
+      <div class="why-image">
+        <div class="why-feature">
+          <div class="why-feature-icon">🎯</div>
+          <div class="why-feature-text">
+            <h4>Senior-led from start to finish</h4>
+            <p>Your engagement is always led by a senior architect — ensuring continuity, accountability, and the right decisions at every stage.</p>
+          </div>
+        </div>
+        <div class="why-feature">
+          <div class="why-feature-icon">🔒</div>
+          <div class="why-feature-text">
+            <h4>Security-first by default</h4>
+            <p>Every design embeds security and compliance from the ground up.</p>
+          </div>
+        </div>
+        <div class="why-feature">
+          <div class="why-feature-icon">📊</div>
+          <div class="why-feature-text">
+            <h4>Outcome-focused delivery</h4>
+            <p>We measure success by your business results, not just project completion.</p>
+          </div>
+        </div>
+        <div class="why-feature">
+          <div class="why-feature-icon">🤝</div>
+          <div class="why-feature-text">
+            <h4>Public sector experience</h4>
+            <p>Proven track record with housing associations and public bodies.</p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="tag">Why IT Experts UK</div>
+        <h2 class="section-title">A Different Kind of Azure Consultancy</h2>
+        <p class="section-sub" style="margin-bottom: 36px;">
+          Most consultancies assign whoever is available. We're different — you get direct access to a seasoned architect who has built and delivered Azure estates for some of the UK's most demanding organisations.
+        </p>
+        <div class="why-points">
+          <div class="why-point">
+            <div class="why-point-num">1</div>
+            <div class="why-point-text">
+              <h4>No overhead, pure expertise</h4>
+              <p>As an independent specialist, we offer enterprise-grade Azure capability without the large consultancy price tag or account management layers.</p>
+            </div>
+          </div>
+          <div class="why-point">
+            <div class="why-point-num">2</div>
+            <div class="why-point-text">
+              <h4>CAF-aligned, not ad hoc</h4>
+              <p>All architecture follows Microsoft's Cloud Adoption Framework, ensuring your cloud platform is built on solid, scalable, and governable foundations.</p>
+            </div>
+          </div>
+          <div class="why-point">
+            <div class="why-point-num">3</div>
+            <div class="why-point-text">
+              <h4>We leave teams stronger</h4>
+              <p>Knowledge transfer is built into every engagement. Your internal team will be better equipped long after we're done.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── OUR APPROACH ── -->
 <section class="section">
   <div class="container">
-    <div class="kicker">Selected services</div>
-    <h2>What IT Experts UK Ltd offers</h2>
-    <div class="grid-3">
-      <div class="card"><h3>CAF-aligned Azure strategy</h3><p>Workshops, roadmap creation, governance design, standards and landing zone architecture.</p></div>
-      <div class="card"><h3>Infrastructure as code</h3><p>Terraform-led deployment patterns, CI/CD pipelines and Azure DevOps automation foundations.</p></div>
-      <div class="card"><h3>Modern workplace</h3><p>Windows 11, Intune, Autopilot, Azure Virtual Desktop and platform improvement programmes.</p></div>
-      <div class="card"><h3>Security and resilience</h3><p>Identity, privileged access, networking, disaster recovery thinking and practical hardening.</p></div>
-      <div class="card"><h3>Migration execution</h3><p>Workload assessment, phased migration, cutover planning and architectural support through delivery.</p></div>
-      <div class="card"><h3>Technical leadership</h3><p>Senior-level architecture input that bridges strategy, engineering, project delivery and stakeholder alignment.</p></div>
+    <div class="section-header section-header--center">
+      <div class="tag">How We Work</div>
+      <h2 class="section-title">A Structured Path to the Cloud</h2>
+      <p class="section-sub">Every engagement follows a proven methodology — giving you clarity, control, and confidence at every stage.</p>
+    </div>
+    <div class="approach-grid">
+      <div class="approach-step">
+        <div class="approach-step__num">01</div>
+        <h3>Discover &amp; Assess</h3>
+        <p>We start by understanding your environment, goals, and constraints. No assumptions — just a thorough assessment of where you are and where you need to be.</p>
+      </div>
+      <div class="approach-step">
+        <div class="approach-step__num">02</div>
+        <h3>Design &amp; Plan</h3>
+        <p>We produce a clear architecture design and implementation roadmap, aligned to your priorities, timelines, and budget. You approve everything before work begins.</p>
+      </div>
+      <div class="approach-step">
+        <div class="approach-step__num">03</div>
+        <h3>Build &amp; Deliver</h3>
+        <p>Hands-on delivery using Infrastructure as Code and automated pipelines. Clean, documented, repeatable — the way enterprise cloud should be built.</p>
+      </div>
+      <div class="approach-step">
+        <div class="approach-step__num">04</div>
+        <h3>Enable &amp; Hand Over</h3>
+        <p>We document everything and up-skill your team so they can operate confidently. You own the outcome — not just the subscription.</p>
+      </div>
     </div>
   </div>
 </section>
-<section class="section">
+
+<!-- ── ABOUT ── -->
+<section class="section section--grey" id="about">
   <div class="container">
-    <div class="kicker">Featured case studies</div>
-    <h2>Recent client work</h2>
-    <div class="grid-3">
-      <article class="card">
-        <h3>Magenta Living</h3>
-        <p>Cloud adoption workshops, Azure landing zones, Terraform-based deployment, migration support and practical team enablement for a housing association modernising its estate.</p>
-      </article>
-      <article class="card">
-        <h3>South Liverpool Homes</h3>
-        <p>CAF-aligned Azure re-architecture, new landing zone, improved resilience and clear delivery blueprints for a housing organisation improving its cloud foundation.</p>
-      </article>
-      <article class="card">
-        <h3>The Woodland Trust</h3>
-        <p>Azure infrastructure support, DevOps tenant migration, data platform improvements and delivery of a large Windows 11 rollout programme.</p>
-      </article>
+    <div class="about-grid">
+      <div class="about-photo">
+        <div class="about-photo__img" style="padding:0;overflow:hidden;"><img src="baz.jpeg" alt="Baz Rashed" style="width:100%;height:100%;object-fit:cover;object-position:top;border-radius:16px;" /></div>
+        <div class="about-photo__badge">
+          <div class="about-photo__badge-num">25+</div>
+          <div class="about-photo__badge-text">Years Experience</div>
+        </div>
+      </div>
+      <div class="about-content">
+        <div class="tag">About</div>
+        <h2 class="section-title">Senior Azure Architect.<br/>Trusted UK Consultant.</h2>
+        <p>
+          I'm Baz — an independent Azure Cloud Architect with over 25 years of hands-on IT experience. I founded IT Experts UK Ltd to provide enterprise-grade Azure consultancy without the overhead of a large firm.
+        </p>
+        <p>
+          My background spans infrastructure, cloud architecture, DevOps, and governance — with deep expertise in Microsoft Azure across private, public sector, and housing association environments. I've led cloud transformation programmes, designed CAF-aligned landing zones, built automated pipelines with Terraform and Bicep, and helped organisations move to the cloud with confidence.
+        </p>
+        <p>
+          I work directly with IT leaders and technical teams, bringing clarity to complex decisions and delivering outcomes that actually stick. When you engage IT Experts UK, you work with me — not a project manager passing work down the chain.
+        </p>
+        <div class="about-certs">
+
+          <span class="cert-pill">
+            <span class="cert-pill-badge">
+              <svg viewBox="0 0 100 115" xmlns="http://www.w3.org/2000/svg"><polygon points="50,5 95,30 95,85 50,110 5,85 5,30" fill="#5c2d91"/><text x="50" y="60" text-anchor="middle" font-size="22" fill="#ffd700" font-family="Arial">★★★</text></svg>
+            </span>
+            AZ-305 Solutions Architect Expert
+          </span>
+
+          <span class="cert-pill">
+            <span class="cert-pill-badge">
+              <svg viewBox="0 0 100 115" xmlns="http://www.w3.org/2000/svg"><polygon points="50,5 95,30 95,85 50,110 5,85 5,30" fill="#5c2d91"/><text x="50" y="60" text-anchor="middle" font-size="22" fill="#ffd700" font-family="Arial">★★★</text></svg>
+            </span>
+            SC-100 Cybersecurity Architect Expert
+          </span>
+
+          <span class="cert-pill">
+            <span class="cert-pill-badge">
+              <svg viewBox="0 0 100 115" xmlns="http://www.w3.org/2000/svg"><polygon points="50,5 95,30 95,85 50,110 5,85 5,30" fill="#0078d4"/><text x="50" y="62" text-anchor="middle" font-size="22" fill="white" font-family="Arial">★★</text></svg>
+            </span>
+            AZ-500 Security Engineer Associate
+          </span>
+
+          <span class="cert-pill">
+            <span class="cert-pill-badge">
+              <svg viewBox="0 0 100 115" xmlns="http://www.w3.org/2000/svg"><polygon points="50,5 95,30 95,85 50,110 5,85 5,30" fill="#0078d4"/><text x="50" y="62" text-anchor="middle" font-size="22" fill="white" font-family="Arial">★★</text></svg>
+            </span>
+            AZ-700 Network Engineer Associate
+          </span>
+
+          <span class="cert-pill">
+            <span class="cert-pill-badge">
+              <svg viewBox="0 0 100 115" xmlns="http://www.w3.org/2000/svg"><polygon points="50,5 95,30 95,85 50,110 5,85 5,30" fill="#0078d4"/><text x="50" y="62" text-anchor="middle" font-size="22" fill="white" font-family="Arial">★★</text></svg>
+            </span>
+            AZ-104 Administrator Associate
+          </span>
+
+          <span class="cert-pill">
+            <span class="cert-pill-badge">
+              <svg viewBox="0 0 100 115" xmlns="http://www.w3.org/2000/svg"><polygon points="50,5 95,30 95,85 50,110 5,85 5,30" fill="#00b7c3"/><text x="50" y="64" text-anchor="middle" font-size="26" fill="white" font-family="Arial">◆</text></svg>
+            </span>
+            Azure Virtual Desktop Specialty
+          </span>
+
+          <span class="cert-pill">
+            <span class="cert-pill-badge">
+              <svg viewBox="0 0 100 115" xmlns="http://www.w3.org/2000/svg"><polygon points="50,5 95,30 95,85 50,110 5,85 5,30" fill="#7b42bc"/><text x="50" y="64" text-anchor="middle" font-size="18" fill="white" font-family="Arial" font-weight="bold">TF</text></svg>
+            </span>
+            Terraform Associate (HashiCorp)
+          </span>
+
+          <span class="cert-pill">
+            <span class="cert-pill-badge">
+              <svg viewBox="0 0 100 115" xmlns="http://www.w3.org/2000/svg"><polygon points="50,5 95,30 95,85 50,110 5,85 5,30" fill="#1ba0d7"/><text x="50" y="64" text-anchor="middle" font-size="13" fill="white" font-family="Arial" font-weight="bold">CCNA</text></svg>
+            </span>
+            Cisco Certified Network Associate
+          </span>
+
+          <span class="cert-pill">
+            <span class="cert-pill-badge">
+              <svg viewBox="0 0 100 115" xmlns="http://www.w3.org/2000/svg"><polygon points="50,5 95,30 95,85 50,110 5,85 5,30" fill="#6e4c8e"/><text x="50" y="64" text-anchor="middle" font-size="12" fill="white" font-family="Arial" font-weight="bold">ITIL</text></svg>
+            </span>
+            ITIL Foundation
+          </span>
+
+        </div>
+        <div class="ms-badge" style="margin-top:28px; display:inline-flex;">
+          <span class="ms-badge-icon">🪟</span>
+          Microsoft Partner Ecosystem
+        </div>
+      </div>
     </div>
   </div>
 </section>
-<section class="section">
-  <div class="container cta-panel">
-    <div class="split">
-      <div>
-        <div class="kicker">Next step</div>
-        <h2>Need senior Azure expertise with hands-on delivery?</h2>
-        <p>Get in touch to discuss Azure architecture, migration, governance, security or modern workplace transformation.</p>
+
+<!-- ── CASE STUDIES ── -->
+<section class="section" id="case-studies">
+  <div class="container">
+    <div class="section-header">
+      <div class="tag">Case Studies</div>
+      <h2 class="section-title">Real Projects. Real Results.</h2>
+      <p class="section-sub">A selection of recent engagements, showing the breadth of challenges we've solved for UK organisations.</p>
+    </div>
+    <div class="case-grid">
+
+      <div class="case-card">
+        <div class="case-card__header">
+          <div class="case-card__sector">Housing Association · Northwest England</div>
+          <div class="case-card__title">Magenta Living — VMware to Azure Cloud Transformation</div>
+        </div>
+        <div class="case-card__body">
+          <div class="case-card__challenge">The Challenge</div>
+          <p class="case-card__text">Magenta Living, a not-for-profit housing association, needed to move away from a traditional on-premises VMware and SAN-based environment to a modern, cloud-first Azure architecture — whilst building internal capability to manage the platform long-term.</p>
+          <div class="case-card__challenge" style="margin-top:16px;">What We Delivered</div>
+          <p class="case-card__text">Led the end-to-end migration, delivering CAF workshops to align stakeholders, deploying Azure Landing Zones and NVAs using Terraform IaC, and standardising networking and security across all sites. Structured knowledge transfer ensured the internal team could independently operate and develop the platform after handover.</p>
+          <div class="case-card__outcomes">
+            <span class="outcome-tag">CAF Workshops</span>
+            <span class="outcome-tag">Azure Landing Zone (Terraform)</span>
+            <span class="outcome-tag">Lift-shift &amp; Re-architecture</span>
+            <span class="outcome-tag">NVA Deployment</span>
+            <span class="outcome-tag">Team Enablement</span>
+          </div>
+        </div>
       </div>
-      <div>
-        <a class="btn btn-primary" href="contact.html">Talk to IT Experts UK Ltd</a>
-        <a class="btn btn-secondary" href="about.html">About Baz</a>
+
+      <div class="case-card">
+        <div class="case-card__header">
+          <div class="case-card__sector">National Charity · UK-Wide</div>
+          <div class="case-card__title">The Woodland Trust — Cloud Migration &amp; Modernisation Programme</div>
+        </div>
+        <div class="case-card__body">
+          <div class="case-card__challenge">The Challenge</div>
+          <p class="case-card__text">The Woodland Trust required a large-scale cloud migration and modernisation programme, including new Azure infrastructure, separate UAT and Production environments, and the modernisation of legacy data platforms — all while supporting parallel business transformation initiatives.</p>
+          <div class="case-card__challenge" style="margin-top:16px;">What We Delivered</div>
+          <p class="case-card__text">Designed and deployed Azure infrastructure to support migration and modernisation. Modernised data platforms from SQL IaaS to Azure SQL Managed Instance and Azure SQL Database. Led the organisation-wide Windows 11 rollout to ~700 endpoints via Microsoft Intune and Autopilot. Migrated the Azure DevOps organisation to a new tenant with improved security and governance.</p>
+          <div class="case-card__outcomes">
+            <span class="outcome-tag">Azure SQL Managed Instance</span>
+            <span class="outcome-tag">700-Endpoint Win11 Rollout</span>
+            <span class="outcome-tag">Intune &amp; Autopilot</span>
+            <span class="outcome-tag">Azure DevOps Migration</span>
+            <span class="outcome-tag">Security &amp; Governance</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="case-card">
+        <div class="case-card__header">
+          <div class="case-card__sector">Housing Association · Merseyside</div>
+          <div class="case-card__title">South Liverpool Homes — Enterprise Landing Zone &amp; AVD</div>
+        </div>
+        <div class="case-card__body">
+          <div class="case-card__challenge">The Challenge</div>
+          <p class="case-card__text">Contracted via Altair Ltd, South Liverpool Homes needed their Azure environment re-architected in alignment with Microsoft's Cloud Adoption Framework, with a focus on enterprise-scale Landing Zone design and automated infrastructure deployment.</p>
+          <div class="case-card__challenge" style="margin-top:16px;">What We Delivered</div>
+          <p class="case-card__text">Delivered a full CAF workshop and gap analysis, then designed and deployed a new Azure Landing Zone using subscription democratisation. Migrated a legacy VPN gateway to a zone-redundant Azure VPN gateway. Implemented Azure DevOps with Terraform CI/CD pipelines, and delivered two separate Azure Virtual Desktop environments — one for internal users, one for a sister housing association.</p>
+          <div class="case-card__outcomes">
+            <span class="outcome-tag">CAF Landing Zone</span>
+            <span class="outcome-tag">Terraform CI/CD Pipelines</span>
+            <span class="outcome-tag">Zone-Redundant VPN Gateway</span>
+            <span class="outcome-tag">Azure Virtual Desktop (x2)</span>
+            <span class="outcome-tag">DR Roadmap</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA BANNER ── -->
+<div class="cta-banner">
+  <div class="container">
+    <h2>Ready to Transform Your Cloud Estate?</h2>
+    <p>Whether you're starting your Azure journey or need to fix what's already there — let's have an honest conversation about where you are and where you need to be.</p>
+    <div class="btn-actions">
+      <a href="#contact" class="btn btn-dark">Get in Touch →</a>
+      <a href="mailto:shahbazrashed@outlook.com" class="btn btn-outline">shahbazrashed@outlook.com</a>
+    </div>
+  </div>
+</div>
+
+<!-- ── CONTACT ── -->
+<section class="section" id="contact">
+  <div class="container">
+    <div class="section-header">
+      <div class="tag">Contact</div>
+      <h2 class="section-title">Let's Start a Conversation</h2>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <h3>Talk to Baz directly.</h3>
+        <p>No sales team. No intake forms that go nowhere. Get in touch and you'll hear back from me personally, usually within one business day.</p>
+        <p>Whether you have a specific project in mind or just want to explore options — I'm happy to have an initial call at no cost or commitment.</p>
+        <div class="contact-detail">
+          <div class="contact-detail-icon">📞</div>
+          <div class="contact-detail-text"><a href="tel:03337724525">0333 772 4525</a></div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-icon">📧</div>
+          <div class="contact-detail-text"><a href="mailto:shahbazrashed@outlook.com">shahbazrashed@outlook.com</a></div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-icon">🔗</div>
+          <div class="contact-detail-text"><a href="https://www.linkedin.com/in/baz-it/" target="_blank">linkedin.com/in/baz-it</a></div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-icon">📍</div>
+          <div class="contact-detail-text">Leeds, United Kingdom</div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-icon">⏱️</div>
+          <div class="contact-detail-text">Available for contract &amp; consulting engagements</div>
+        </div>
+      </div>
+      <div class="contact-form">
+        <form>
+          <div class="form-row">
+            <div class="form-group">
+              <label>First Name</label>
+              <input type="text" placeholder="John" />
+            </div>
+            <div class="form-group">
+              <label>Last Name</label>
+              <input type="text" placeholder="Smith" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Organisation</label>
+            <input type="text" placeholder="Your company or organisation" />
+          </div>
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" placeholder="john@yourorg.co.uk" />
+          </div>
+          <div class="form-group">
+            <label>How can I help?</label>
+            <select>
+              <option value="">Select a service area...</option>
+              <option>Azure Cloud Architecture</option>
+              <option>Cloud Migration</option>
+              <option>Azure Governance &amp; CAF</option>
+              <option>DevOps &amp; Automation</option>
+              <option>Azure Health Check / Review</option>
+              <option>Other / Not sure yet</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Tell me about your project</label>
+            <textarea placeholder="Briefly describe your current situation and what you're trying to achieve..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center;">
+            Send Message →
+          </button>
+        </form>
       </div>
     </div>
   </div>
 </section>
+
+<!-- ── FOOTER ── -->
 <footer class="footer">
-  <div class="container footer-grid">
-    <div>
-      <img src="assets/logo.jpg" alt="IT Experts UK Ltd logo" class="footer-logo">
-      <p>Azure architecture, cloud transformation, infrastructure as code, security, governance and delivery leadership for housing associations and other complex organisations.</p>
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <a href="#" class="footer__logo" style="text-decoration:none; display:inline-block;">
+          <img src="logo.jpg" alt="IT Experts UK" />
+        </a>
+        <p>Senior Azure Cloud Architecture and Transformation consultancy, serving enterprise and public sector organisations across the United Kingdom.</p>
+        <div class="ms-badge">
+          <span class="ms-badge-icon">🪟</span>
+          Microsoft Azure Specialist
+        </div>
+      </div>
+      <div class="footer__col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="#services">Azure Cloud Architecture</a></li>
+          <li><a href="#services">Cloud Migration</a></li>
+          <li><a href="#services">Governance &amp; CAF</a></li>
+          <li><a href="#services">DevOps &amp; Automation</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#about">About Baz</a></li>
+          <li><a href="#approach">Our Approach</a></li>
+          <li><a href="#case-studies">Case Studies</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="https://www.linkedin.com/in/baz-it/" target="_blank">LinkedIn</a></li>
+          <li><a href="mailto:shahbazrashed@outlook.com">Email Us</a></li>
+          <li><a href="#contact">Book a Call</a></li>
+        </ul>
+      </div>
     </div>
-    <div>
-      <h3>Quick links</h3>
-      <p><a href="housing.html">Housing Associations</a></p>
-      <p><a href="services.html">Services</a></p>
-      <p><a href="case-studies.html">Case Studies</a></p>
-      <p><a href="about.html">About</a></p>
-    </div>
-    <div>
-      <h3>Contact</h3>
-      <p><a href="mailto:shahbazrashed@outlook.com">shahbazrashed@outlook.com</a></p>
-      <p><a href="tel:07828818292">07828 818292</a></p>
-      <p><a href="https://www.linkedin.com/in/baz-it/" target="_blank" rel="noopener">LinkedIn</a></p>
-      <p class="small">Leeds, UK</p>
+    <div class="footer__bottom">
+      <p>© 2026 IT Experts UK Ltd. All rights reserved. Registered in England & Wales.</p>
+      <div class="footer__bottom-right">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms</a>
+      </div>
     </div>
   </div>
 </footer>
+
+<script>
+  // Smooth scroll for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // Navbar scroll effect
+  window.addEventListener('scroll', () => {
+    const nav = document.querySelector('.navbar');
+    if (window.scrollY > 20) {
+      nav.style.background = 'rgba(11,25,41,0.98)';
+    } else {
+      nav.style.background = 'rgba(11,25,41,0.96)';
+    }
+  });
+
+  // Simple form submit handler
+  document.querySelector('form').addEventListener('submit', e => {
+    e.preventDefault();
+    const btn = e.target.querySelector('button[type="submit"]');
+    btn.textContent = '✓ Message Sent — I\'ll be in touch soon!';
+    btn.style.background = '#16a34a';
+    btn.disabled = true;
+  });
+</script>
+
 </body>
 </html>
